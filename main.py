@@ -1,9 +1,9 @@
 import discord
 import requests
 from load import cities
+from api_token import TOKEN
 
 client = discord.Client(intents=discord.Intents.all())
-TOKEN = 'MTA4NTU2NTkxMjA0MTY1NjM4Mg.GDYDPz.xTYYRVPLEX1uxXstYmWLm2Oe0XchSMp_AwiTnM'
 
 
 def get_duck_url():
