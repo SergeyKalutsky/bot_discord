@@ -1,4 +1,5 @@
 import discord
+import random
 import requests
 from load import cities
 from api_token import TOKEN
@@ -36,6 +37,7 @@ async def on_message(message):
             return 
         used_cities.append(city_user)
         cities.remove(city_user)
+        random.shuffle(cities)
         for city in cities:
             if city[0] == city_user[-1]:
                 await message.channel.send(city)
