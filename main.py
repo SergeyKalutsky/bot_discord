@@ -16,6 +16,7 @@ def get_fox():
     return res['link']
 
 gameon = False
+used_cities = []
 
 @client.event
 async def on_message(message):
@@ -24,12 +25,19 @@ async def on_message(message):
         return
     if gameon:
         city_user = message.content.lower()
-        if city_user not in cities:
-            await message.channel.send('Такого города я не знаю')
+        if city_user in used_cities:
+            await message.channel.send('Такого город уже называли! Попробуйте еще раз')
             return 
+        if city_user not in cities:
+            await message.channel.send('Такого города я не знаю!')
+            return 
+        used_cities.append(city_user)
+        cities.remove(city_user)
         for city in cities:
             if city[0] == city_user[-1]:
                 await message.channel.send(city)
+                used_cities.append(city)
+                cities.remove(city)
                 return
     if message.content == '!game':
         gameon = True
