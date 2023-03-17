@@ -17,14 +17,17 @@ def get_fox():
 
 gameon = False
 used_cities = []
-
+last_letter = ''
 @client.event
 async def on_message(message):
-    global gameon
+    global gameon, last_letter
     if message.author == client.user:
         return
     if gameon:
         city_user = message.content.lower()
+        if city_user[0] != last_letter and last_letter != '':
+            await message.channel.send('Нужно называть город на последнюю букву')
+            return 
         if city_user in used_cities:
             await message.channel.send('Такого город уже называли! Попробуйте еще раз')
             return 
@@ -36,6 +39,7 @@ async def on_message(message):
         for city in cities:
             if city[0] == city_user[-1]:
                 await message.channel.send(city)
+                last_letter = city[-1]
                 used_cities.append(city)
                 cities.remove(city)
                 return
